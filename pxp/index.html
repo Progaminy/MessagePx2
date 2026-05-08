@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pxp - Minha Galeria</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <h1>🎨 Pxp</h1>
+            <p>Minha Galeria Pessoal</p>
+        </header>
+
+        <!-- Secção Fotos -->
+        <section class="seccao">
+            <h2>📸 Fotos</h2>
+            <div class="galeria" id="galeria-fotos">
+                <div class="item" onclick="abrirMidia('foto', 0)">
+                    <div class="placeholder">📷</div>
+                    <img id="foto-0" src="" alt="Foto 1" style="display:none">
+                </div>
+                <div class="item" onclick="abrirMidia('foto', 1)">
+                    <div class="placeholder">📷</div>
+                    <img id="foto-1" src="" alt="Foto 2" style="display:none">
+                </div>
+                <div class="item" onclick="abrirMidia('foto', 2)">
+                    <div class="placeholder">📷</div>
+                    <img id="foto-2" src="" alt="Foto 3" style="display:none">
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Vídeos -->
+        <section class="seccao">
+            <h2>🎬 Vídeos</h2>
+            <div class="galeria" id="galeria-videos">
+                <div class="item" onclick="abrirMidia('video', 0)">
+                    <div class="placeholder">🎬</div>
+                    <video id="video-0" src="" style="display:none" controls></video>
+                </div>
+                <div class="item" onclick="abrirMidia('video', 1)">
+                    <div class="placeholder">🎬</div>
+                    <video id="video-1" src="" style="display:none" controls></video>
+                </div>
+                <div class="item" onclick="abrirMidia('video', 2)">
+                    <div class="placeholder">🎬</div>
+                    <video id="video-2" src="" style="display:none" controls></video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal para abrir mídia -->
+        <div class="modal" id="modal">
+            <span class="fechar" onclick="fecharModal()">✕</span>
+            <button class="download-btn" id="btn-download" onclick="baixarMidia()">⬇ Baixar</button>
+            <img id="modal-img" src="" alt="" style="display:none">
+            <video id="modal-video" src="" style="display:none" controls></video>
+        </div>
+
+        <!-- Status -->
+        <footer class="status">
+            <span id="status-texto">A carregar...</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

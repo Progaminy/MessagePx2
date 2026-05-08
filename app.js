@@ -1,11 +1,11 @@
-// URL do arquivo com a URL do servidor (no GitHub)
 const GITHUB_URL = 'https://raw.githubusercontent.com/Progaminy/MessagePx2/main/server_url.txt';
 let abaAtual = 'recebidas';
 let urlServidor = '';
 
-// Ao abrir a página
 document.addEventListener('DOMContentLoaded', () => {
     carregarUrlServidor();
+    // Atualiza a cada 30 segundos
+    setInterval(atualizarMensagens, 30000);
 });
 
 async function carregarUrlServidor() {
@@ -14,12 +14,11 @@ async function carregarUrlServidor() {
         urlServidor = await resposta.text();
         urlServidor = urlServidor.trim();
         console.log('URL do servidor:', urlServidor);
+        document.getElementById('ultima-atualizacao').textContent = 'Conectado ao servidor';
         atualizarMensagens();
-        // Atualiza a cada 30 segundos
-        setInterval(atualizarMensagens, 30000);
     } catch (erro) {
         document.getElementById('lista-mensagens').innerHTML = 
-            '<p style="color:#ff4444">Erro ao carregar servidor. Tente novamente.</p>';
+            '<p style="color:#ff4444">Erro ao carregar servidor.</p>';
     }
 }
 
@@ -42,7 +41,8 @@ async function atualizarMensagens() {
         document.getElementById('ultima-atualizacao').textContent = 
             'Atualizado: ' + agora.toLocaleTimeString('pt-BR');
     } catch (erro) {
-        console.log('Erro ao atualizar:', erro);
+        document.getElementById('ultima-atualizacao').textContent = 
+            'Erro ao conectar. Tentando novamente...';
     }
 }
 

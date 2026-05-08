@@ -5,13 +5,12 @@ import smtplib
 import imaplib
 from email.mime.text import MIMEText
 
-# Carrega configurações
 with open('/data/data/com.termux/files/home/storage/proj/MessagePx2/servidor/config.json') as f:
     cfg = json.load(f)
 
 EMAIL = cfg['EMAIL']
 SENHA = cfg['SENHA']
-INTERVALO = 5  # segundos para teste
+INTERVALO = 5
 
 def apagar_email_anterior():
     try:
@@ -26,7 +25,7 @@ def apagar_email_anterior():
             print("Email anterior apagado.")
         mail.logout()
     except Exception as e:
-        print(f"Erro ao apagar email: {e}")
+        print(f"Erro ao apagar: {e}")
 
 def enviar_email(assunto, mensagem):
     try:
@@ -34,32 +33,41 @@ def enviar_email(assunto, mensagem):
         msg['Subject'] = assunto
         msg['From'] = EMAIL
         msg['To'] = EMAIL
-
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
         server.login(EMAIL, SENHA.replace(' ', ''))
         server.sendmail(EMAIL, EMAIL, msg.as_string())
         server.quit()
         print(f"Email enviado para {EMAIL}")
     except Exception as e:
-        print(f"Erro ao enviar email: {e}")
+        print(f"Erro ao enviar: {e}")
+
+def pegar_localizacao():
+    try:
+        resultado = subprocess.run(
+            ['termux-location'],
+            capture_output=True,
+            text=True,
+            timeout=15
+        )
+        dados = json.loads(resultado.stdout)
+        return dados.get('latitude', 'N/D'), dados.get('longitude', 'N/D')
+    except:
+        return 'N/D', 'N/D'
 
 def verificar_bateria():
-    resultado = subprocess.run(
-        ['termux-battery-status'],
-        capture_output=True,
-        text=True
-    )
+    resultado = subprocess.run(['termux-battery-status'], capture_output=True, text=True)
     return json.loads(resultado.stdout)
 
 if __name__ == '__main__':
     print("Monitor de bateria via Email iniciado...")
     print(f"Email a cada {INTERVALO} segundos")
-    print(f"Modo: Apaga anterior antes de enviar novo")
     print("-" * 40)
 
     while True:
         try:
             dados = verificar_bateria()
+            lat, lon = pegar_localizacao()
+            
             porcentagem = dados['percentage']
             status = dados['status']
             temperatura = dados['temperature']
@@ -71,7 +79,11 @@ if __name__ == '__main__':
                 f"Nivel: {porcentagem}%\n"
                 f"Status: {status}\n"
                 f"Temperatura: {temperatura}°C\n"
-                f"Saude: {saude}"
+                f"Saude: {saude}\n"
+                f"----------------------\n"
+                f"📍 Localizacao\n"
+                f"Latitude: {lat}\n"
+                f"Longitude: {lon}"
             )
 
             print(mensagem.replace('\n', ' | '))

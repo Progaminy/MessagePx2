@@ -3,10 +3,14 @@ import requests
 import time
 import re
 import threading
+import json
 
-# CONFIGURAÇÕES
-TOKEN = "8557708504:AAG2hnmS81MzE4Dj3wscfBIa6gc8hfJS6Yw"
-CHAT_ID = "7756976956"
+# Carrega configurações
+with open('/data/data/com.termux/files/home/storage/proj/MessagePx2/guardiao/config.json') as f:
+    cfg = json.load(f)
+
+TOKEN = cfg['TOKEN']
+CHAT_ID = cfg['CHAT_ID']
 
 ultima_url = ""
 
@@ -27,7 +31,7 @@ def notificar_android(titulo, mensagem, url):
             '--title', titulo,
             '--content', mensagem,
             '--action', f'android.intent.action.VIEW,{url}'
-        ], timeout=5)
+        ], timeout=10)
         print(f"Notificacao Android enviada: {url}")
     except Exception as e:
         print(f"Erro ao notificar Android: {e}")
@@ -64,11 +68,8 @@ def iniciar_tunel():
         url = extrair_url(linha)
         if url and url != ultima_url:
             ultima_url = url
-            # 1. Notificacao Android (rapida, topo da tela)
             notificar_android("Tunel Ativo", "Clique para acessar o servidor", url)
-            # 2. Telegram (backup)
             enviar_telegram(f"Novo tunel ativo:\n{url}")
-            # 3. Inicia thread para manter o tunel vivo
             threading.Thread(target=manter_tunel_vivo, args=(url,), daemon=True).start()
         else:
             print(linha.strip())

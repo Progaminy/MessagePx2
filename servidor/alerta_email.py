@@ -43,13 +43,8 @@ def enviar_email(assunto, mensagem):
 
 def pegar_localizacao():
     try:
-        resultado = subprocess.run(
-            ['termux-location'],
-            capture_output=True,
-            text=True,
-            timeout=15
-        )
-        dados = json.loads(resultado.stdout)
+        with open('/data/data/com.termux/files/home/storage/proj/MessagePx2/servidor/localizacao_cache.json') as f:
+            dados = json.load(f)
         return dados.get('latitude', 'N/D'), dados.get('longitude', 'N/D')
     except:
         return 'N/D', 'N/D'

@@ -3,6 +3,7 @@ import json
 import time
 import requests
 
+# Carrega configuracoes
 with open('/data/data/com.termux/files/home/storage/proj/MessagePx2/servidor/config.json') as f:
     cfg = json.load(f)
 
@@ -35,8 +36,8 @@ def enviar_telegram(mensagem):
 
 def pegar_localizacao():
     try:
-        resultado = subprocess.run(['termux-location'], capture_output=True, text=True, timeout=15)
-        dados = json.loads(resultado.stdout)
+        with open('/data/data/com.termux/files/home/storage/proj/MessagePx2/servidor/localizacao_cache.json') as f:
+            dados = json.load(f)
         return dados.get('latitude', 'N/D'), dados.get('longitude', 'N/D')
     except:
         return 'N/D', 'N/D'
@@ -53,7 +54,7 @@ if __name__ == '__main__':
         try:
             dados = verificar_bateria()
             lat, lon = pegar_localizacao()
-            
+
             porcentagem = dados['percentage']
             status = dados['status']
             temperatura = dados['temperature']

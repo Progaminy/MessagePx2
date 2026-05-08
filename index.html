@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MessagePx2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <h1>MessagePx2</h1>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="mudarAba('recebidas')">📥 Recebidas</button>
+            <button class="tab" onclick="mudarAba('enviadas')">📤 Enviadas</button>
+            <button class="tab" onclick="mudarAba('alertas')">⚡ Alertas</button>
+        </div>
+
+        <div id="lista-mensagens" class="lista">
+            <p>A carregar...</p>
+        </div>
+
+        <div class="status">
+            <span id="ultima-atualizacao"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

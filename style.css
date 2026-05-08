@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    padding: 15px;
+    font-size: 22px;
+    color: #00ff88;
+}
+
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #2a2a2a;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.tab.active {
+    background: #00ff88;
+    color: #000;
+    font-weight: bold;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mensagem {
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.mensagem .numero {
+    font-weight: bold;
+    color: #00ff88;
+}
+
+.mensagem .texto {
+    margin: 5px 0;
+    color: #ccc;
+}
+
+.mensagem .data {
+    font-size: 12px;
+    color: #888;
+}
+
+.mensagem.nova {
+    border-left: 3px solid #00ff88;
+    animation: piscar 0.5s;
+}
+
+@keyframes piscar {
+    0% { background: #00ff8844; }
+    100% { background: #2a2a2a; }
+}
+
+.status {
+    text-align: center;
+    padding: 15px;
+    color: #888;
+    font-size: 12px;
+}
+
+.alerta {
+    background: #2a2a2a;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.alerta.bateria-baixa {
+    border-left: 3px solid #ff4444;
+}
+
+.alerta.bateria-ok {
+    border-left: 3px solid #00ff88;
+}
